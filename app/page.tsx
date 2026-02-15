@@ -44,7 +44,7 @@ export default function Home() {
           opacity: 0.95
         }}>
           <p style={{ marginBottom: '20px', fontSize: '24px', fontWeight: 'bold' }}>
-            過去20年分を徹底分析。AI学習で最短合格へ。
+            過去20年分を徹底網羅。わかりやすい解説で確実な合格をサポート。
           </p>
           <p style={{ marginBottom: '15px' }}>
             ✓ 全地域対応（特別指定・指定・一般地域）
