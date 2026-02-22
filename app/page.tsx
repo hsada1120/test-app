@@ -45,18 +45,18 @@ function CountdownTimer({
 
   if (compact) {
     return (
-      <span className="inline-flex gap-1.5 font-mono font-bold text-white text-base md:text-lg">
+      <span className="inline-flex gap-2 font-mono font-bold text-white text-lg md:text-2xl">
         {timeLeft.days > 0 && (
           <span>
             {timeLeft.days}
-            <span className="text-xs font-normal opacity-80">日</span>
+            <span className="text-sm md:text-base font-normal opacity-80">日</span>
           </span>
         )}
         <span>
           {String(timeLeft.hours).padStart(2, "0")}
-          <span className="text-xs font-normal opacity-80">:</span>
+          <span className="text-sm md:text-base font-normal opacity-80">:</span>
           {String(timeLeft.minutes).padStart(2, "0")}
-          <span className="text-xs font-normal opacity-80">:</span>
+          <span className="text-sm md:text-base font-normal opacity-80">:</span>
           {String(timeLeft.seconds).padStart(2, "0")}
         </span>
       </span>
@@ -182,6 +182,9 @@ const CAMPAIGN_END = "2026-03-13T00:00:00+09:00";
 function PlanSelection({ id }: { id?: string }) {
   return (
     <Section bg="white" id={id}>
+      <p className="text-center text-xs md:text-sm font-bold tracking-widest text-[#2a5298] mb-4">
+        全国個人タクシー法令試験研究所 監修
+      </p>
       <SectionHeading>
         あなたに合ったプランを選んでください。
       </SectionHeading>
@@ -431,18 +434,21 @@ export default function Home() {
       {/* ============================================================ */}
       {/* 0. トップバナー（キャンペーン告知）                             */}
       {/* ============================================================ */}
-      <div className="bg-[#1a2744] text-white py-3 md:py-4 px-4 text-center">
-        <div className="max-w-3xl mx-auto flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4">
-          <div className="flex flex-col sm:flex-row items-center gap-1 sm:gap-3">
-            <span className="text-xs md:text-sm font-bold opacity-90">
+      <div className="bg-[#1a2744] text-white py-5 md:py-7 px-4 text-center">
+        <div className="max-w-4xl mx-auto flex flex-col items-center gap-3 md:gap-4">
+          <span className="text-[11px] md:text-sm font-bold tracking-widest text-yellow-300/90 border border-yellow-300/40 px-3 py-0.5 rounded-full">
+            全国個人タクシー法令試験研究所 監修
+          </span>
+          <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-4">
+            <span className="text-base sm:text-lg md:text-2xl font-bold tracking-wide">
               2026年7月試験完全対応 最新版リリース記念
             </span>
-            <span className="bg-[#b91c1c] text-white text-xs md:text-sm font-bold px-3 py-0.5 rounded">
+            <span className="bg-[#b91c1c] text-white text-sm md:text-lg font-bold px-4 py-1 md:px-5 md:py-1.5 rounded">
               特別価格 50%OFF
             </span>
           </div>
-          <div className="flex items-center gap-2">
-            <span className="text-xs opacity-70">終了まで</span>
+          <div className="flex items-center gap-3">
+            <span className="text-sm md:text-base font-bold opacity-80">終了まで</span>
             <CountdownTimer targetDate={CAMPAIGN_END} compact />
           </div>
         </div>
@@ -480,6 +486,9 @@ export default function Home() {
             法人で10年以上ハンドルを握り続けてきたあなたが、
             <br className="hidden md:inline" />
             自分の看板で走るための、最後の関門を突破するために。
+          </p>
+          <p className="text-xs md:text-sm font-bold tracking-widest text-yellow-300/90 mb-3">
+            全国個人タクシー法令試験研究所 監修
           </p>
           <div className="inline-block bg-white/10 backdrop-blur-sm rounded-full px-7 py-3 text-sm md:text-base tracking-wider">
             個人タクシー法令試験 問題集アプリ
@@ -1194,6 +1203,11 @@ export default function Home() {
               2026年3月10日リリース予定です！
               <br />
               もう少しだけお待ちください！
+            </p>
+          </div>
+          <div className="mt-16 pt-8 border-t border-white/20">
+            <p className="text-xs md:text-sm font-bold tracking-widest text-white/70">
+              全国個人タクシー法令試験研究所 監修
             </p>
           </div>
         </div>
