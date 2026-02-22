@@ -5,7 +5,13 @@ import { useState, useEffect } from "react";
 /* ------------------------------------------------------------------ */
 /*  カウントダウンタイマー                                              */
 /* ------------------------------------------------------------------ */
-function CountdownTimer({ targetDate }: { targetDate: string }) {
+function CountdownTimer({
+  targetDate,
+  compact,
+}: {
+  targetDate: string;
+  compact?: boolean;
+}) {
   const [timeLeft, setTimeLeft] = useState({
     days: 0,
     hours: 0,
@@ -35,7 +41,27 @@ function CountdownTimer({ targetDate }: { targetDate: string }) {
     return () => clearInterval(id);
   }, [targetDate]);
 
-  if (!mounted) return <div className="h-20" />;
+  if (!mounted) return <div className={compact ? "h-10" : "h-20"} />;
+
+  if (compact) {
+    return (
+      <span className="inline-flex gap-1.5 font-mono font-bold text-white text-base md:text-lg">
+        {timeLeft.days > 0 && (
+          <span>
+            {timeLeft.days}
+            <span className="text-xs font-normal opacity-80">日</span>
+          </span>
+        )}
+        <span>
+          {String(timeLeft.hours).padStart(2, "0")}
+          <span className="text-xs font-normal opacity-80">:</span>
+          {String(timeLeft.minutes).padStart(2, "0")}
+          <span className="text-xs font-normal opacity-80">:</span>
+          {String(timeLeft.seconds).padStart(2, "0")}
+        </span>
+      </span>
+    );
+  }
 
   return (
     <div className="flex gap-3 justify-center">
@@ -60,7 +86,7 @@ function CountdownTimer({ targetDate }: { targetDate: string }) {
 }
 
 /* ------------------------------------------------------------------ */
-/*  共通コンポーネント                                                  */
+/*  共通レイアウトコンポーネント                                         */
 /* ------------------------------------------------------------------ */
 function Section({
   children,
@@ -116,13 +142,7 @@ function Closing({ children }: { children: React.ReactNode }) {
   );
 }
 
-function FeatureCard({
-  title,
-  desc,
-}: {
-  title: string;
-  desc: string;
-}) {
+function FeatureCard({ title, desc }: { title: string; desc: string }) {
   return (
     <div className="bg-white rounded-xl border border-gray-200 p-5 md:p-6">
       <h3 className="text-[16px] md:text-[17px] font-bold mb-2 text-[#1a2744]">
@@ -154,6 +174,254 @@ function PremiumFeatureCard({
   );
 }
 
+/* ------------------------------------------------------------------ */
+/*  プラン選択（再利用コンポーネント）                                    */
+/* ------------------------------------------------------------------ */
+const CAMPAIGN_END = "2026-03-13T00:00:00+09:00";
+
+function PlanSelection({ id }: { id?: string }) {
+  return (
+    <Section bg="white" id={id}>
+      <SectionHeading>
+        あなたに合ったプランを選んでください。
+      </SectionHeading>
+
+      {/* キャンペーン表示 */}
+      <div className="text-center mb-10">
+        <p className="text-sm md:text-base font-bold text-[#2a5298] mb-1">
+          2026年7月試験完全対応 最新版リリース記念
+        </p>
+        <p className="text-lg md:text-xl font-bold text-[#b91c1c] mb-5">
+          特別価格 50%OFF 終了まで
+        </p>
+        <CountdownTimer targetDate={CAMPAIGN_END} />
+      </div>
+
+      {/* プラン比較カード */}
+      <div className="grid md:grid-cols-3 gap-5 md:gap-4">
+        {/* ── スタンダード 90日 ── */}
+        <div className="bg-white rounded-xl border border-gray-200 p-6 md:p-7 flex flex-col">
+          <div className="text-center mb-6">
+            <p className="text-xs font-bold text-[#888] tracking-widest mb-1">
+              STANDARD
+            </p>
+            <h3 className="text-xl font-bold mb-1">スタンダード</h3>
+            <p className="text-sm text-[#888]">90日間</p>
+          </div>
+          <div className="text-center mb-6">
+            <p className="text-[15px] text-[#888] line-through leading-snug">
+              定価 ¥19,800
+            </p>
+            <div className="flex items-center justify-center gap-2 mt-2">
+              <span className="bg-[#b91c1c] text-white text-xs font-bold px-2 py-0.5 rounded">
+                50%OFF
+              </span>
+            </div>
+            <p className="text-3xl font-bold mt-1">
+              ¥9,900
+              <span className="text-xs font-normal text-[#888] ml-1">
+                （税込）
+              </span>
+            </p>
+          </div>
+          <ul className="space-y-2 text-sm leading-relaxed mb-6 flex-1">
+            <li className="flex items-start gap-2">
+              <span className="text-[#2a5298] shrink-0 mt-0.5">&#10003;</span>
+              共通機能15種すべて利用可能
+            </li>
+            <li className="text-xs text-[#aaa] ml-6 -mt-1">
+              分析最適化学習 / 模試ノーマル / 音声学習 / ランキング / 合格判定ランク 他
+            </li>
+            <li className="flex items-start gap-2 mt-2 text-[#ccc]">
+              <span className="shrink-0 mt-0.5">&mdash;</span>
+              模擬試験ハード・レジェンドモード
+            </li>
+            <li className="flex items-start gap-2 text-[#ccc]">
+              <span className="shrink-0 mt-0.5">&mdash;</span>
+              語群オール選択肢方式
+            </li>
+            <li className="flex items-start gap-2 text-[#ccc]">
+              <span className="shrink-0 mt-0.5">&mdash;</span>
+              質問機能
+            </li>
+            <li className="flex items-start gap-2 text-[#ccc]">
+              <span className="shrink-0 mt-0.5">&mdash;</span>
+              メモ・しおり機能
+            </li>
+            <li className="flex items-start gap-2 text-[#ccc]">
+              <span className="shrink-0 mt-0.5">&mdash;</span>
+              合格保証
+            </li>
+          </ul>
+          <div>
+            <button
+              disabled
+              className="w-full py-3.5 rounded-lg border-2 border-gray-300 text-gray-400 font-bold cursor-not-allowed"
+            >
+              このプランを選ぶ
+            </button>
+            <p className="text-xs text-center text-[#d97706] font-bold mt-2 leading-relaxed">
+              2026年7月試験対応 最新版
+              <br />
+              3月10日リリース予定！
+            </p>
+          </div>
+        </div>
+
+        {/* ── プレミアム 90日 ── */}
+        <div className="bg-white rounded-xl border-2 border-[#1a2744] p-6 md:p-7 flex flex-col relative">
+          <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-[#1a2744] text-white text-xs font-bold px-4 py-1.5 rounded-full whitespace-nowrap">
+            試験日が近い方に
+          </div>
+          <div className="text-center mb-6 mt-2">
+            <p className="text-xs font-bold text-[#2a5298] tracking-widest mb-1">
+              PREMIUM
+            </p>
+            <h3 className="text-xl font-bold mb-1">プレミアム</h3>
+            <p className="text-sm text-[#888]">90日間</p>
+          </div>
+          <div className="text-center mb-6">
+            <p className="text-[15px] text-[#888] line-through leading-snug">
+              定価 ¥27,800
+            </p>
+            <div className="flex items-center justify-center gap-2 mt-2">
+              <span className="bg-[#b91c1c] text-white text-xs font-bold px-2 py-0.5 rounded">
+                50%OFF
+              </span>
+            </div>
+            <p className="text-3xl font-bold text-[#1a2744] mt-1">
+              ¥13,900
+              <span className="text-xs font-normal text-[#888] ml-1">
+                （税込）
+              </span>
+            </p>
+          </div>
+          <ul className="space-y-2 text-sm leading-relaxed mb-6 flex-1">
+            <li className="flex items-start gap-2">
+              <span className="text-[#2a5298] shrink-0 mt-0.5">&#10003;</span>
+              共通機能15種すべて利用可能
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-[#2a5298] shrink-0 mt-0.5">&#10003;</span>
+              <strong>模擬試験ハード＆レジェンドモード</strong>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-[#2a5298] shrink-0 mt-0.5">&#10003;</span>
+              <strong>語群オール選択肢方式</strong>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-[#2a5298] shrink-0 mt-0.5">&#10003;</span>
+              <strong>質問機能</strong>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-[#2a5298] shrink-0 mt-0.5">&#10003;</span>
+              <strong>メモ・しおり機能</strong>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-[#2a5298] shrink-0 mt-0.5">&#10003;</span>
+              <strong>出題優先オプション</strong>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-[#b91c1c] shrink-0 mt-0.5 font-bold">
+                &#10003;
+              </span>
+              <strong className="text-[#b91c1c]">合格保証付き</strong>
+            </li>
+          </ul>
+          <div>
+            <button
+              disabled
+              className="w-full py-3.5 rounded-lg bg-gray-300 text-gray-500 font-bold cursor-not-allowed"
+            >
+              このプランを選ぶ
+            </button>
+            <p className="text-xs text-center text-[#d97706] font-bold mt-2 leading-relaxed">
+              2026年7月試験対応 最新版
+              <br />
+              3月10日リリース予定！
+            </p>
+          </div>
+        </div>
+
+        {/* ── プレミアム 180日 ── */}
+        <div className="bg-white rounded-xl border-2 border-[#1a2744] p-6 md:p-7 flex flex-col relative">
+          <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-[#b91c1c] text-white text-xs font-bold px-4 py-1.5 rounded-full whitespace-nowrap">
+            余裕を持ちたい方に
+          </div>
+          <div className="text-center mb-6 mt-2">
+            <p className="text-xs font-bold text-[#2a5298] tracking-widest mb-1">
+              PREMIUM
+            </p>
+            <h3 className="text-xl font-bold mb-1">プレミアム</h3>
+            <p className="text-sm text-[#888]">180日間</p>
+          </div>
+          <div className="text-center mb-6">
+            <p className="text-[15px] text-[#888] line-through leading-snug">
+              定価 ¥39,800
+            </p>
+            <div className="flex items-center justify-center gap-2 mt-2">
+              <span className="bg-[#b91c1c] text-white text-xs font-bold px-2 py-0.5 rounded">
+                50%OFF
+              </span>
+            </div>
+            <p className="text-3xl font-bold text-[#1a2744] mt-1">
+              ¥19,900
+              <span className="text-xs font-normal text-[#888] ml-1">
+                （税込）
+              </span>
+            </p>
+          </div>
+          <ul className="space-y-2 text-sm leading-relaxed mb-6 flex-1">
+            <li className="flex items-start gap-2">
+              <span className="text-[#2a5298] shrink-0 mt-0.5">&#10003;</span>
+              共通機能15種すべて利用可能
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-[#2a5298] shrink-0 mt-0.5">&#10003;</span>
+              <strong>模擬試験ハード＆レジェンドモード</strong>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-[#2a5298] shrink-0 mt-0.5">&#10003;</span>
+              <strong>語群オール選択肢方式</strong>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-[#2a5298] shrink-0 mt-0.5">&#10003;</span>
+              <strong>質問機能</strong>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-[#2a5298] shrink-0 mt-0.5">&#10003;</span>
+              <strong>メモ・しおり機能</strong>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-[#2a5298] shrink-0 mt-0.5">&#10003;</span>
+              <strong>出題優先オプション</strong>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-[#b91c1c] shrink-0 mt-0.5 font-bold">
+                &#10003;
+              </span>
+              <strong className="text-[#b91c1c]">合格保証付き</strong>
+            </li>
+          </ul>
+          <div>
+            <button
+              disabled
+              className="w-full py-3.5 rounded-lg bg-gray-300 text-gray-500 font-bold cursor-not-allowed"
+            >
+              このプランを選ぶ
+            </button>
+            <p className="text-xs text-center text-[#d97706] font-bold mt-2 leading-relaxed">
+              2026年7月試験対応 最新版
+              <br />
+              3月10日リリース予定！
+            </p>
+          </div>
+        </div>
+      </div>
+    </Section>
+  );
+}
+
 /* ================================================================== */
 /*  メインページ                                                       */
 /* ================================================================== */
@@ -161,10 +429,30 @@ export default function Home() {
   return (
     <main className="text-[#1a2744]">
       {/* ============================================================ */}
+      {/* 0. トップバナー（キャンペーン告知）                             */}
+      {/* ============================================================ */}
+      <div className="bg-[#1a2744] text-white py-3 md:py-4 px-4 text-center">
+        <div className="max-w-3xl mx-auto flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4">
+          <div className="flex flex-col sm:flex-row items-center gap-1 sm:gap-3">
+            <span className="text-xs md:text-sm font-bold opacity-90">
+              2026年7月試験完全対応 最新版リリース記念
+            </span>
+            <span className="bg-[#b91c1c] text-white text-xs md:text-sm font-bold px-3 py-0.5 rounded">
+              特別価格 50%OFF
+            </span>
+          </div>
+          <div className="flex items-center gap-2">
+            <span className="text-xs opacity-70">終了まで</span>
+            <CountdownTimer targetDate={CAMPAIGN_END} compact />
+          </div>
+        </div>
+      </div>
+
+      {/* ============================================================ */}
       {/* 1. ファーストビュー                                           */}
       {/* ============================================================ */}
       <section
-        className="relative min-h-screen flex items-center justify-center px-5 py-24"
+        className="relative min-h-[calc(100vh-52px)] flex items-center justify-center px-5 py-24"
         style={{
           background:
             "linear-gradient(160deg, #0d1b3e 0%, #1a3a6b 40%, #2a5298 100%)",
@@ -181,12 +469,17 @@ export default function Home() {
             <br className="sm:hidden" />
             何年待てますか？
           </h1>
-          <p className="text-[15px] sm:text-base md:text-xl leading-relaxed md:leading-loose opacity-90 max-w-2xl mx-auto mb-16">
+          <p className="text-[15px] sm:text-base md:text-xl leading-relaxed md:leading-loose opacity-90 max-w-2xl mx-auto mb-8">
             残り日数、あなたの弱点、あなたの習熟傾向、試験問題の傾向。
             <br className="hidden md:inline" />
             すべてを分析して合格までの最短ルートを作る、
             <br className="hidden md:inline" />
             あなた専用の法令試験対策。
+          </p>
+          <p className="text-[14px] sm:text-[15px] md:text-base opacity-70 max-w-xl mx-auto mb-14 leading-relaxed">
+            法人で10年以上ハンドルを握り続けてきたあなたが、
+            <br className="hidden md:inline" />
+            自分の看板で走るための、最後の関門を突破するために。
           </p>
           <div className="inline-block bg-white/10 backdrop-blur-sm rounded-full px-7 py-3 text-sm md:text-base tracking-wider">
             個人タクシー法令試験 問題集アプリ
@@ -247,6 +540,13 @@ export default function Home() {
           </div>
 
           <p>
+            10年以上法人で走り続けて、
+            <br />
+            ようやく手にした受験資格。
+            <br />
+            その重みを、誰よりもあなた自身がわかっているはずです。
+          </p>
+          <p>
             不合格で3ヶ月遅れ、その間に違反があれば、
             <br />
             <strong>
@@ -287,6 +587,13 @@ export default function Home() {
             語群選択問題にいつから手をつけるべきなのか。
             <br />
             誰も教えてくれません。
+          </p>
+          <p>
+            日々の乗務の合間に勉強時間を確保するのは、
+            <br />
+            簡単なことではありません。
+            <br />
+            だからこそ、<strong>限られた時間の使い方</strong>が合否を分けます。
           </p>
           <p className="text-lg md:text-xl font-bold">
             このアプリは、そこから設計思想が違います。
@@ -400,7 +707,6 @@ export default function Home() {
             「他の人はどのくらいやっているのか」という指標が加わります。
           </p>
 
-          {/* 夢が遠のくメッセージ */}
           <p className="text-[15px] md:text-base text-[#666] mt-8 pt-6 border-t border-gray-100 leading-relaxed text-center">
             試験までの時間は限られています。
             <br />
@@ -560,7 +866,7 @@ export default function Home() {
         </SectionHeading>
         <Body>
           <p className="text-center mb-8">
-            AIがあなた専用の学習プランを毎日更新。
+            あなた専用の学習プランを毎日更新。
             <br />
             曖昧な問題も推定根拠付きで徹底解説。
             <br />
@@ -568,7 +874,7 @@ export default function Home() {
             <br />
             全国の受験者とランキングで競い合う。
             <br />
-            運転中の隙間時間も、音声学習で無駄にしない。
+            乗務の合間も、音声学習で無駄にしない。
           </p>
           <p className="text-center font-bold text-lg md:text-xl">
             問題を解くだけのアプリではありません。
@@ -613,7 +919,6 @@ export default function Home() {
             <strong>それでは不安だからではないでしょうか。</strong>
           </p>
 
-          {/* 夢が遠のくメッセージ */}
           <div className="bg-[#f5f6f8] rounded-xl p-6 md:p-8 border border-gray-200 my-4 text-center">
             <p className="leading-relaxed">
               不合格で3ヶ月遅れた場合の機会損失は約180万円。
@@ -624,6 +929,13 @@ export default function Home() {
                 個人タクシーという夢そのものが遠のきます。
               </strong>
             </p>
+            <p className="leading-relaxed mt-3">
+              毎日お客様を乗せて走りながら、
+              <br />
+              いつか自分の看板で走りたいと思い続けてきた。
+              <br />
+              その夢を、たった1日分の手取りで前に進められるとしたら。
+            </p>
           </div>
 
           <p className="font-bold">
@@ -633,7 +945,6 @@ export default function Home() {
           </p>
           <p className="font-bold text-lg md:text-xl">そして、約束します。</p>
 
-          {/* 合格保証ボックス */}
           <div className="bg-[#f5f6f8] rounded-xl p-6 md:p-8 border border-gray-200 my-4">
             <p className="font-bold text-lg md:text-xl mb-4 text-[#1a2744]">
               万が一不合格だった場合、
@@ -682,11 +993,13 @@ export default function Home() {
             <br />
             <strong>それだけの自信があるからです。</strong>
           </p>
-          <p className="text-xs text-[#aaa] mt-8">
-            ※合格保証はプレミアムプランのみ対象です。適用には所定の条件があります。
-          </p>
         </Body>
       </Section>
+
+      {/* ============================================================ */}
+      {/* 8.5 プラン選択（1回目：共通機能の前）                            */}
+      {/* ============================================================ */}
+      <PlanSelection id="plans-top" />
 
       {/* ============================================================ */}
       {/* 9. 共通機能（スタンダード・プレミアム共通）                      */}
@@ -699,8 +1012,8 @@ export default function Home() {
         </SectionHeading>
         <div className="grid sm:grid-cols-2 gap-4 md:gap-5">
           <FeatureCard
-            title="AI最適化学習モード"
-            desc="あなたの進捗率・正答率・試験までの残り日数をAIが分析し、今日やるべき学習パターンを複数提案。「何をどの順番で解くか」をもう自分で考える必要はありません。"
+            title="高度分析最適化モード"
+            desc="あなたの進捗率・正答率・試験までの残り日数を独自のアルゴリズムで分析し、今日やるべき学習パターンを複数提案。「何をどの順番で解くか」をもう自分で考える必要はありません。"
           />
           <FeatureCard
             title="模擬試験ノーマルモード"
@@ -712,7 +1025,7 @@ export default function Home() {
           />
           <FeatureCard
             title="音声学習モード"
-            desc="問題文→思考時間→正解→解説を自動読み上げ。運転中・通勤中の「ながら学習」で、1日の隙間時間すべてが勉強時間に変わります。語群の条文読み上げや語呂合わせBGMにも対応。"
+            desc="問題文→思考時間→正解→解説を自動読み上げ。乗務中・通勤中の「ながら学習」で、1日の隙間時間すべてが勉強時間に変わります。語群の条文読み上げや語呂合わせBGMにも対応。"
           />
           <FeatureCard
             title="復習機能（間違えた問題の自動抽出）"
@@ -736,7 +1049,7 @@ export default function Home() {
           />
           <FeatureCard
             title="合格判定ランク（SSS〜F）"
-            desc="あなたの進捗と残り日数からAIが合格可能性をSSS〜Fの9段階で判定。「このペースで間に合うのか」が常に数値で確認でき、漠然とした不安が具体的な行動に変わります。"
+            desc="あなたの進捗と残り日数から合格可能性をSSS〜Fの9段階で判定。「このペースで間に合うのか」が常に数値で確認でき、漠然とした不安が具体的な行動に変わります。"
           />
           <FeatureCard
             title="誤答理由の記録と絞り込み"
@@ -785,7 +1098,7 @@ export default function Home() {
             />
             <PremiumFeatureCard
               title="模擬試験レジェンドモード"
-              desc="あなたの弱点だけで構成された最高難度の模試。正答率が低い順・最終出題が古い順で出題。苦手問題から逃げない、最も効率的な克服法です。"
+              desc="あなたの弱点だけで構成された最高難度の模試。正答率が低い問題のうち、最近解いていない問題を優先して出題。苦手から逃げない、最も効率的な克服法です。"
             />
             <PremiumFeatureCard
               title="語群選択：オール選択肢方式"
@@ -793,7 +1106,7 @@ export default function Home() {
             />
             <PremiumFeatureCard
               title="質問機能"
-              desc="解説に疑問があれば、その問題に紐づけて運営に直接質問を送信。月5回まで利用可能で、回答はアプリ内に表示されます。メール通知にも対応。"
+              desc="解説に疑問があれば、その問題に紐づけて運営に直接質問を送信。回答はアプリ内に表示され、メール通知にも対応。疑問を残さず次に進めます。"
             />
             <PremiumFeatureCard
               title="合格保証"
@@ -820,236 +1133,9 @@ export default function Home() {
       </section>
 
       {/* ============================================================ */}
-      {/* 11. プラン選択                                                 */}
+      {/* 11. プラン選択（2回目：プレミアム機能の後）                      */}
       {/* ============================================================ */}
-      <Section bg="white" id="plans">
-        <SectionHeading>
-          あなたに合ったプランを選んでください。
-        </SectionHeading>
-
-        {/* キャンペーン表示 */}
-        <div className="text-center mb-10">
-          <p className="text-sm md:text-base font-bold text-[#2a5298] mb-1">
-            2026年7月試験完全対応 最新版リリース記念
-          </p>
-          <p className="text-lg md:text-xl font-bold text-[#b91c1c] mb-5">
-            特別価格 50%OFF 終了まで
-          </p>
-          <CountdownTimer targetDate="2026-03-13T00:00:00+09:00" />
-        </div>
-
-        {/* プラン比較カード */}
-        <div className="grid md:grid-cols-3 gap-5 md:gap-4 mb-8">
-          {/* ── スタンダード 90日 ── */}
-          <div className="bg-white rounded-xl border border-gray-200 p-6 md:p-7 flex flex-col">
-            <div className="text-center mb-6">
-              <p className="text-xs font-bold text-[#888] tracking-widest mb-1">
-                STANDARD
-              </p>
-              <h3 className="text-xl font-bold mb-1">スタンダード</h3>
-              <p className="text-sm text-[#888]">90日間</p>
-            </div>
-            <div className="text-center mb-6">
-              <p className="text-sm text-[#bbb] line-through">¥19,800</p>
-              <div className="flex items-center justify-center gap-2 mt-1">
-                <span className="bg-[#b91c1c] text-white text-xs font-bold px-2 py-0.5 rounded">
-                  50%OFF
-                </span>
-                <span className="text-3xl font-bold">¥9,900</span>
-              </div>
-              <p className="text-xs text-[#888] mt-1">（税込）</p>
-            </div>
-            <ul className="space-y-2 text-sm leading-relaxed mb-6 flex-1">
-              <li className="flex items-start gap-2">
-                <span className="text-[#2a5298] shrink-0 mt-0.5">&#10003;</span>
-                共通機能15種すべて利用可能
-              </li>
-              <li className="text-xs text-[#aaa] ml-6 -mt-1">
-                AI学習プラン / 模試ノーマル / 音声学習 / ランキング / 合格判定ランク 他
-              </li>
-              <li className="flex items-start gap-2 mt-2 text-[#ccc]">
-                <span className="shrink-0 mt-0.5">&mdash;</span>
-                模擬試験ハード・レジェンドモード
-              </li>
-              <li className="flex items-start gap-2 text-[#ccc]">
-                <span className="shrink-0 mt-0.5">&mdash;</span>
-                語群オール選択肢方式
-              </li>
-              <li className="flex items-start gap-2 text-[#ccc]">
-                <span className="shrink-0 mt-0.5">&mdash;</span>
-                質問機能
-              </li>
-              <li className="flex items-start gap-2 text-[#ccc]">
-                <span className="shrink-0 mt-0.5">&mdash;</span>
-                メモ・しおり機能
-              </li>
-              <li className="flex items-start gap-2 text-[#ccc]">
-                <span className="shrink-0 mt-0.5">&mdash;</span>
-                合格保証
-              </li>
-            </ul>
-            <div>
-              <button
-                disabled
-                className="w-full py-3.5 rounded-lg border-2 border-gray-300 text-gray-400 font-bold cursor-not-allowed"
-              >
-                このプランを選ぶ
-              </button>
-              <p className="text-xs text-center text-[#d97706] font-bold mt-2 leading-relaxed">
-                2026年7月試験対応 最新版
-                <br />
-                3月10日リリース予定！
-              </p>
-            </div>
-          </div>
-
-          {/* ── プレミアム 90日 ── */}
-          <div className="bg-white rounded-xl border-2 border-[#1a2744] p-6 md:p-7 flex flex-col relative">
-            <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-[#1a2744] text-white text-xs font-bold px-4 py-1.5 rounded-full whitespace-nowrap">
-              試験日が近い方に
-            </div>
-            <div className="text-center mb-6 mt-2">
-              <p className="text-xs font-bold text-[#2a5298] tracking-widest mb-1">
-                PREMIUM
-              </p>
-              <h3 className="text-xl font-bold mb-1">プレミアム</h3>
-              <p className="text-sm text-[#888]">90日間</p>
-            </div>
-            <div className="text-center mb-6">
-              <p className="text-sm text-[#bbb] line-through">¥27,800</p>
-              <div className="flex items-center justify-center gap-2 mt-1">
-                <span className="bg-[#b91c1c] text-white text-xs font-bold px-2 py-0.5 rounded">
-                  50%OFF
-                </span>
-                <span className="text-3xl font-bold text-[#1a2744]">
-                  ¥13,900
-                </span>
-              </div>
-              <p className="text-xs text-[#888] mt-1">（税込）</p>
-            </div>
-            <ul className="space-y-2 text-sm leading-relaxed mb-6 flex-1">
-              <li className="flex items-start gap-2">
-                <span className="text-[#2a5298] shrink-0 mt-0.5">&#10003;</span>
-                共通機能15種すべて利用可能
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-[#2a5298] shrink-0 mt-0.5">&#10003;</span>
-                <strong>模擬試験ハード＆レジェンドモード</strong>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-[#2a5298] shrink-0 mt-0.5">&#10003;</span>
-                <strong>語群オール選択肢方式</strong>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-[#2a5298] shrink-0 mt-0.5">&#10003;</span>
-                <strong>質問機能（月5回）</strong>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-[#2a5298] shrink-0 mt-0.5">&#10003;</span>
-                <strong>メモ・しおり機能</strong>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-[#2a5298] shrink-0 mt-0.5">&#10003;</span>
-                <strong>出題優先オプション</strong>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-[#b91c1c] shrink-0 mt-0.5 font-bold">
-                  &#10003;
-                </span>
-                <strong className="text-[#b91c1c]">合格保証付き</strong>
-              </li>
-            </ul>
-            <div>
-              <button
-                disabled
-                className="w-full py-3.5 rounded-lg bg-gray-300 text-gray-500 font-bold cursor-not-allowed"
-              >
-                このプランを選ぶ
-              </button>
-              <p className="text-xs text-center text-[#d97706] font-bold mt-2 leading-relaxed">
-                2026年7月試験対応 最新版
-                <br />
-                3月10日リリース予定！
-              </p>
-            </div>
-          </div>
-
-          {/* ── プレミアム 180日 ── */}
-          <div className="bg-white rounded-xl border-2 border-[#1a2744] p-6 md:p-7 flex flex-col relative">
-            <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-[#b91c1c] text-white text-xs font-bold px-4 py-1.5 rounded-full whitespace-nowrap">
-              余裕を持ちたい方に
-            </div>
-            <div className="text-center mb-6 mt-2">
-              <p className="text-xs font-bold text-[#2a5298] tracking-widest mb-1">
-                PREMIUM
-              </p>
-              <h3 className="text-xl font-bold mb-1">プレミアム</h3>
-              <p className="text-sm text-[#888]">180日間</p>
-            </div>
-            <div className="text-center mb-6">
-              <p className="text-sm text-[#bbb] line-through">¥39,800</p>
-              <div className="flex items-center justify-center gap-2 mt-1">
-                <span className="bg-[#b91c1c] text-white text-xs font-bold px-2 py-0.5 rounded">
-                  50%OFF
-                </span>
-                <span className="text-3xl font-bold text-[#1a2744]">
-                  ¥19,900
-                </span>
-              </div>
-              <p className="text-xs text-[#888] mt-1">（税込）</p>
-            </div>
-            <ul className="space-y-2 text-sm leading-relaxed mb-6 flex-1">
-              <li className="flex items-start gap-2">
-                <span className="text-[#2a5298] shrink-0 mt-0.5">&#10003;</span>
-                共通機能15種すべて利用可能
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-[#2a5298] shrink-0 mt-0.5">&#10003;</span>
-                <strong>模擬試験ハード＆レジェンドモード</strong>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-[#2a5298] shrink-0 mt-0.5">&#10003;</span>
-                <strong>語群オール選択肢方式</strong>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-[#2a5298] shrink-0 mt-0.5">&#10003;</span>
-                <strong>質問機能（月5回）</strong>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-[#2a5298] shrink-0 mt-0.5">&#10003;</span>
-                <strong>メモ・しおり機能</strong>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-[#2a5298] shrink-0 mt-0.5">&#10003;</span>
-                <strong>出題優先オプション</strong>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-[#b91c1c] shrink-0 mt-0.5 font-bold">
-                  &#10003;
-                </span>
-                <strong className="text-[#b91c1c]">合格保証付き</strong>
-              </li>
-            </ul>
-            <div>
-              <button
-                disabled
-                className="w-full py-3.5 rounded-lg bg-gray-300 text-gray-500 font-bold cursor-not-allowed"
-              >
-                このプランを選ぶ
-              </button>
-              <p className="text-xs text-center text-[#d97706] font-bold mt-2 leading-relaxed">
-                2026年7月試験対応 最新版
-                <br />
-                3月10日リリース予定！
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <p className="text-[11px] text-[#bbb] text-center mt-4">
-          ※合格保証はプレミアムプランのみ対象・適用条件あり
-        </p>
-      </Section>
+      <PlanSelection id="plans" />
 
       {/* ============================================================ */}
       {/* 12. 最後の一押し                                               */}
@@ -1078,7 +1164,11 @@ export default function Home() {
               さらに遠くなります。
             </p>
             <p>
-              このアプリの価格は手取り1日分。
+              営業収入がそのまま自分の収入になる。
+              <br />
+              自分のペースで、自分の判断で走れる。
+              <br />
+              その未来を手に入れるための投資は、手取りたった1日分。
               <br />
               しかも不合格なら全額返金。
             </p>
