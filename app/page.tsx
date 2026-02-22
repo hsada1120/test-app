@@ -455,13 +455,215 @@ export default function Home() {
       </div>
 
       {/* ============================================================ */}
-      {/* 1. ファーストビュー                                           */}
+      {/* 1. プロダクトショーケース                                      */}
       {/* ============================================================ */}
       <section
-        className="relative min-h-[calc(100vh-52px)] flex items-center justify-center px-5 py-24"
+        className="relative overflow-hidden px-5 py-16 md:py-24"
         style={{
           background:
             "linear-gradient(160deg, #0d1b3e 0%, #1a3a6b 40%, #2a5298 100%)",
+        }}
+      >
+        {/* 装飾グロー */}
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[600px] rounded-full opacity-10 pointer-events-none" style={{ background: "radial-gradient(circle, #60a5fa 0%, transparent 70%)" }} />
+
+        <div className="relative max-w-4xl mx-auto text-center text-white">
+          {/* ── ヘッドライン ── */}
+          <p className="text-xs md:text-sm font-bold tracking-[.25em] text-yellow-300/90 mb-4">
+            全国個人タクシー法令試験研究所 監修
+          </p>
+          <p className="inline-block text-[11px] md:text-sm font-bold tracking-widest bg-white/10 border border-white/20 rounded-full px-5 py-1.5 mb-6">
+            2026年7月試験対応版 — まもなくリリース
+          </p>
+
+          <h2
+            className="text-[22px] sm:text-[28px] md:text-[36px] lg:text-[42px] font-bold leading-snug md:leading-tight mb-6"
+            style={{ textShadow: "2px 2px 12px rgba(0,0,0,0.4)" }}
+          >
+            全受験生待望の
+            <br />
+            個人タクシー法令試験
+            <br />
+            <span className="text-yellow-300">完全対策プログラム</span>
+          </h2>
+
+          {/* ── メインコピー ── */}
+          <div className="max-w-3xl mx-auto mb-12 md:mb-16">
+            <div className="relative bg-white/[0.07] backdrop-blur-sm border border-white/10 rounded-2xl px-6 md:px-10 py-8 md:py-10">
+              <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-yellow-400 text-[#1a2744] text-[10px] md:text-xs font-black tracking-widest px-4 py-1 rounded-full">
+                CONCEPT
+              </div>
+              <p className="text-[17px] sm:text-xl md:text-2xl font-bold leading-relaxed md:leading-relaxed">
+                軍師である<span className="text-yellow-300">高度分析プログラム</span>が、
+                <br className="hidden sm:inline" />
+                あなたの完全合格ルートを、
+                <br />
+                <span className="text-yellow-300">あなた専用に毎日設計する。</span>
+              </p>
+            </div>
+          </div>
+
+          {/* ── AI分析エンジン解説 ── */}
+          <div className="max-w-3xl mx-auto mb-14 md:mb-20">
+            <div className="flex items-center justify-center gap-2 mb-6">
+              <div className="h-px w-8 bg-white/30" />
+              <span className="text-[11px] md:text-xs font-bold tracking-[.2em] text-white/60">ANALYSIS ENGINE</span>
+              <div className="h-px w-8 bg-white/30" />
+            </div>
+
+            <div className="text-[13px] sm:text-[15px] md:text-[17px] leading-[2] md:leading-[2.2] text-white/85 space-y-6 text-left md:text-center">
+              <p>
+                ジャンル別正答率、最終解答日、放置している問題の割合、ミスの傾向、
+                <br className="hidden md:inline" />
+                ○×と語群それぞれの仕上がり、出題傾向、試験までの残り日数。
+                <br className="hidden md:inline" />
+                <strong className="text-white">すべてを掛け合わせて、今日やるべきことを毎日最適化。</strong>
+              </p>
+
+              <div className="grid sm:grid-cols-2 gap-3 md:gap-4 text-left">
+                <div className="bg-white/[0.06] border border-white/10 rounded-xl px-5 py-4">
+                  <p className="text-xs font-bold text-yellow-300/80 tracking-wider mb-2">忘却検知</p>
+                  <p className="text-[13px] md:text-[15px] leading-relaxed text-white/80">
+                    正答率80%でも、最後に解いたのが3週間前なら——それは「できる問題」ではなく<strong className="text-white">「忘れかけている問題」</strong>。
+                  </p>
+                </div>
+                <div className="bg-white/[0.06] border border-white/10 rounded-xl px-5 py-4">
+                  <p className="text-xs font-bold text-yellow-300/80 tracking-wider mb-2">直前期の自動戦略切替</p>
+                  <p className="text-[13px] md:text-[15px] leading-relaxed text-white/80">
+                    進捗率が高ければ記憶定着を優先。低ければタイパ重視で○×の令和問題を優先。<strong className="text-white">残り日数に応じて、戦略が自動で変わる。</strong>
+                  </p>
+                </div>
+              </div>
+
+              <p className="text-center">
+                語群選択にいつ手をつけるかも、
+                <br className="hidden md:inline" />
+                ○×の仕上がりと残り日数を見て<strong className="text-white">アプリが判断する。</strong>
+                <br />
+                <strong className="text-white text-base md:text-lg">何を勉強するか迷う時間は、もう必要ない。</strong>
+              </p>
+            </div>
+          </div>
+
+          {/* ── 機能ハイライト 5枚カード ── */}
+          <div className="max-w-4xl mx-auto mb-14 md:mb-20">
+            <div className="flex items-center justify-center gap-2 mb-8">
+              <div className="h-px w-8 bg-white/30" />
+              <span className="text-[11px] md:text-xs font-bold tracking-[.2em] text-white/60">FEATURES</span>
+              <div className="h-px w-8 bg-white/30" />
+            </div>
+
+            <div className="grid gap-4 md:gap-5">
+              {/* カード1: 間違いの質を分析 */}
+              <div className="bg-white/[0.06] border border-white/10 rounded-2xl p-6 md:p-8 text-left">
+                <div className="flex items-start gap-4 md:gap-6">
+                  <div className="shrink-0 w-12 h-12 md:w-14 md:h-14 rounded-xl bg-gradient-to-br from-blue-400/30 to-blue-600/30 border border-blue-400/20 flex items-center justify-center text-xl md:text-2xl">
+                    🔬
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <h3 className="text-base md:text-lg font-bold mb-2">間違いの"質"を分析する</h3>
+                    <p className="text-[13px] md:text-[15px] leading-relaxed text-white/75">
+                      不正解を<strong className="text-white">「引っかけミス」と「理解不足」に分類</strong>して記録。
+                      他ユーザーの平均正答率と照合し、「みんなも間違える難問」か「自分だけ間違える基礎問題」かを判別。
+                      <strong className="text-white">間違え方が違えば、対策も違う。</strong>
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* カード2: 語群選択オール選択肢方式 */}
+              <div className="bg-white/[0.06] border border-white/10 rounded-2xl p-6 md:p-8 text-left">
+                <div className="flex items-start gap-4 md:gap-6">
+                  <div className="shrink-0 w-12 h-12 md:w-14 md:h-14 rounded-xl bg-gradient-to-br from-purple-400/30 to-purple-600/30 border border-purple-400/20 flex items-center justify-center text-xl md:text-2xl">
+                    🎯
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <h3 className="text-base md:text-lg font-bold mb-2">語群選択｜オール選択肢方式</h3>
+                    <p className="text-[13px] md:text-[15px] leading-relaxed text-white/75">
+                      本番の10個ではない。その条文で過去に出題された選択肢すべて、<strong className="text-white">30〜40個から解答。</strong>
+                      「処置」と「措置」、「事由」と「理由」——一文字違いが並ぶ中で正解を選べるか。
+                      <strong className="text-white">消去法が通用しない環境で鍛えるから、本番の10個が楽になる。</strong>
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* カード3: 曖昧問題 */}
+              <div className="bg-white/[0.06] border border-white/10 rounded-2xl p-6 md:p-8 text-left">
+                <div className="flex items-start gap-4 md:gap-6">
+                  <div className="shrink-0 w-12 h-12 md:w-14 md:h-14 rounded-xl bg-gradient-to-br from-amber-400/30 to-amber-600/30 border border-amber-400/20 flex items-center justify-center text-xl md:text-2xl">
+                    📖
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <h3 className="text-base md:text-lg font-bold mb-2">曖昧問題｜根拠付き解答徹底解説</h3>
+                    <p className="text-[13px] md:text-[15px] leading-relaxed text-white/75">
+                      条文を読んでも答えが割れる問題。他の問題集では「解説なし」「回答不能」「根拠のない別解答」。
+                      このアプリは、<strong className="text-white">「出題者がどちらの答えを想定しているのか？」その思考ロジックと根拠まで徹底解剖</strong>して解説する。
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* カード4・5 を横並び */}
+              <div className="grid sm:grid-cols-2 gap-4 md:gap-5">
+                {/* カード4: ランキング */}
+                <div className="bg-white/[0.06] border border-white/10 rounded-2xl p-6 md:p-8 text-left">
+                  <div className="flex items-start gap-4">
+                    <div className="shrink-0 w-12 h-12 md:w-14 md:h-14 rounded-xl bg-gradient-to-br from-emerald-400/30 to-emerald-600/30 border border-emerald-400/20 flex items-center justify-center text-xl md:text-2xl">
+                      🏆
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <h3 className="text-base md:text-lg font-bold mb-2">全国ランキング × 合格判定</h3>
+                      <p className="text-[13px] md:text-[15px] leading-relaxed text-white/75">
+                        模擬試験で全国の受験者と順位を競い、合格可能性を<strong className="text-white">SSS〜Fの9段階でリアルタイム判定。</strong>
+                        他の受験者の進捗やランクバッジも見えるから、「自分だけ遅れているのか」が数字でわかる。
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* カード5: 音声学習 */}
+                <div className="bg-white/[0.06] border border-white/10 rounded-2xl p-6 md:p-8 text-left">
+                  <div className="flex items-start gap-4">
+                    <div className="shrink-0 w-12 h-12 md:w-14 md:h-14 rounded-xl bg-gradient-to-br from-rose-400/30 to-rose-600/30 border border-rose-400/20 flex items-center justify-center text-xl md:text-2xl">
+                      🎧
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <h3 className="text-base md:text-lg font-bold mb-2">乗務中も、勉強時間にする</h3>
+                      <p className="text-[13px] md:text-[15px] leading-relaxed text-white/75">
+                        音声学習モードで問題文→思考時間→正解→解説を自動読み上げ。
+                        <strong className="text-white">ハンドルを握りながら、1日の隙間時間すべてが学習に変わる。</strong>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* ── クロージングコピー ── */}
+          <div className="relative max-w-2xl mx-auto">
+            <div className="h-px w-full bg-gradient-to-r from-transparent via-white/30 to-transparent mb-10" />
+            <p
+              className="text-lg sm:text-xl md:text-2xl font-bold tracking-wide"
+              style={{ textShadow: "1px 1px 6px rgba(0,0,0,0.3)" }}
+            >
+              問題を並べるだけの教材とは、
+              <br />
+              <span className="text-yellow-300">設計思想が違う。</span>
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* ============================================================ */}
+      {/* 1.5. ファーストビュー（煽り）                                  */}
+      {/* ============================================================ */}
+      <section
+        className="relative min-h-[70vh] flex items-center justify-center px-5 py-20 md:py-28"
+        style={{
+          background:
+            "linear-gradient(180deg, #2a5298 0%, #1a3a6b 30%, #0d1b3e 100%)",
         }}
       >
         <div className="max-w-3xl mx-auto text-center text-white">
