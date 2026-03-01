@@ -1,9 +1,13 @@
 "use client";
 
+import { useState } from "react";
+
 /* ================================================================== */
 /*  メインページ                                                       */
 /* ================================================================== */
 export default function Home() {
+  const [showModal, setShowModal] = useState(false);
+
   return (
     <main className="text-[#1a2744]">
       {/* ============================================================ */}
@@ -47,7 +51,7 @@ export default function Home() {
               }}
             >
               <p className="text-[13px] sm:text-base md:text-lg font-bold leading-relaxed text-white">
-                <span className="text-sky-300">関東運輸支局</span>
+                <span className="text-sky-300">関東運輸局</span>
                 <span className="text-white/60 mx-1">｜</span>
                 東京特別区・武三交通圏
                 <span className="text-white/40">／</span>
@@ -95,8 +99,8 @@ export default function Home() {
           {/* ── CTA ── */}
           <div>
             <button
-              disabled
-              className="inline-block bg-white/40 text-white/70 text-lg md:text-xl font-bold px-10 md:px-14 py-4 md:py-5 rounded-xl cursor-not-allowed"
+              onClick={() => setShowModal(true)}
+              className="inline-block bg-gradient-to-r from-yellow-400 to-amber-500 hover:from-yellow-300 hover:to-amber-400 text-[#1a2744] text-lg md:text-xl font-bold px-10 md:px-14 py-4 md:py-5 rounded-xl shadow-lg shadow-yellow-400/30 transition-all duration-200 hover:scale-105 cursor-pointer"
             >
               無料で始める
             </button>
@@ -229,7 +233,7 @@ export default function Home() {
                   🔬
                 </div>
                 <div className="flex-1 min-w-0">
-                  <h3 className="text-base md:text-lg font-bold text-white mb-2">カスタマイズ出題機能</h3>
+                  <h3 className="text-base md:text-lg font-bold text-white mb-2">カスタマイズ出題オプション機能</h3>
                   <p className="text-[13px] md:text-[15px] leading-relaxed text-white/75">
                     高度分析最適化モードとは別に、ユーザーの好みにカスタマイズして出題する機能も搭載。
                     <strong className="text-white">一度も手を付けたことのない問題を優先する、前回不正解だった問題を優先する、最近解いていない問題を優先する、令和元年以降に出題された問題を優先する</strong>、ユーザー平均正答率が高いor低い問題を優先する、3連続で正解している問題は除外する、関連する問題を連続して出題する——といった様々な高度なカスタマイズに対応しています。
@@ -338,28 +342,74 @@ export default function Home() {
       {/*  CTA セクション                                               */}
       {/* ============================================================ */}
       <section
-        className="py-20 md:py-28 px-5"
+        className="relative py-24 md:py-32 px-5 overflow-hidden"
         style={{
           background:
             "linear-gradient(160deg, #0d1b3e 0%, #1a3a6b 40%, #2a5298 100%)",
         }}
       >
-        <div className="max-w-3xl mx-auto text-center text-white">
-          <h2 className="text-[22px] md:text-[28px] font-bold mb-6 leading-snug">
-            2026年7月試験対応
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full opacity-[0.07] pointer-events-none" style={{ background: "radial-gradient(circle, #60a5fa 0%, transparent 70%)" }} />
+
+        <div className="relative max-w-4xl mx-auto text-center text-white">
+          {/* ── 2026年7月試験対応版バッジ ── */}
+          <div className="mb-6">
+            <span
+              className="inline-block text-base sm:text-lg md:text-xl font-black tracking-wider px-6 md:px-8 py-2 md:py-2.5 rounded-full"
+              style={{
+                background: "linear-gradient(135deg, #f59e0b 0%, #ef4444 100%)",
+                color: "#fff",
+                boxShadow: "0 0 24px rgba(245,158,11,0.45)",
+              }}
+            >
+              2026年7月試験対応版
+            </span>
+          </div>
+
+          <h2
+            className="text-[26px] sm:text-[32px] md:text-[40px] font-black mb-5 leading-snug"
+            style={{ textShadow: "2px 2px 12px rgba(0,0,0,0.4)" }}
+          >
+            個人タクシー法令試験
             <br />
-            個人タクシー法令試験完全対策プログラム
+            <span className="text-yellow-300">完全対策プログラム</span>
           </h2>
+
+          {/* ── エリア対応 ── */}
+          <div className="mb-8">
+            <div
+              className="inline-block rounded-xl px-5 md:px-8 py-3 md:py-4 border-2"
+              style={{
+                borderColor: "rgba(96,165,250,0.5)",
+                background: "rgba(96,165,250,0.1)",
+              }}
+            >
+              <p className="text-[13px] sm:text-base md:text-lg font-bold leading-relaxed text-white">
+                <span className="text-sky-300">関東運輸局</span>
+                <span className="text-white/60 mx-1">｜</span>
+                東京特別区・武三交通圏
+                <span className="text-white/40">／</span>
+                神奈川京浜交通圏
+                <span className="text-white/40">／</span>
+                関東その他の交通圏
+              </p>
+              <p className="text-base sm:text-lg md:text-xl font-black tracking-widest mt-1.5"
+                style={{ color: "#facc15" }}
+              >
+                全エリア対応
+              </p>
+            </div>
+          </div>
+
           <p className="text-[15px] md:text-[17px] leading-relaxed text-white/80 mb-10">
-            すべての機能を無料でご利用いただけます。
+            すべての標準機能を無料でご利用いただけます。
             <br />
             アカウント登録後、すぐに学習を始められます。
           </p>
 
           <div>
             <button
-              disabled
-              className="inline-block bg-white/40 text-white/70 text-lg md:text-xl font-bold px-10 md:px-14 py-4 md:py-5 rounded-xl cursor-not-allowed"
+              onClick={() => setShowModal(true)}
+              className="inline-block bg-gradient-to-r from-yellow-400 to-amber-500 hover:from-yellow-300 hover:to-amber-400 text-[#1a2744] text-lg md:text-xl font-bold px-10 md:px-14 py-4 md:py-5 rounded-xl shadow-lg shadow-yellow-400/30 transition-all duration-200 hover:scale-105 cursor-pointer"
             >
               無料で新規登録する
             </button>
@@ -381,6 +431,51 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* ============================================================ */}
+      {/*  リリース予定モーダル                                          */}
+      {/* ============================================================ */}
+      {showModal && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center px-5"
+          onClick={() => setShowModal(false)}
+        >
+          <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" />
+          <div
+            className="relative bg-white rounded-2xl shadow-2xl max-w-md w-full p-8 md:p-10 text-center"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="mb-6">
+              <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-yellow-100 mb-4">
+                <span className="text-3xl">🚀</span>
+              </div>
+              <h3 className="text-xl md:text-2xl font-bold text-[#1a2744] mb-3">
+                まもなくリリース！
+              </h3>
+              <div className="inline-flex items-center gap-2 bg-yellow-50 border border-yellow-200 rounded-full px-4 py-1.5 mb-4">
+                <span className="relative flex h-2 w-2">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-yellow-400 opacity-75" />
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-yellow-400" />
+                </span>
+                <span className="text-sm font-bold text-amber-600">
+                  2026年3月10日 リリース予定
+                </span>
+              </div>
+              <p className="text-[15px] leading-relaxed text-[#555]">
+                現在、最終準備を進めております。
+                <br />
+                リリースまでもう少々お待ちください！
+              </p>
+            </div>
+            <button
+              onClick={() => setShowModal(false)}
+              className="bg-[#1a3a6b] hover:bg-[#2a5298] text-white font-bold text-base px-8 py-3 rounded-xl transition-colors duration-200 cursor-pointer"
+            >
+              閉じる
+            </button>
+          </div>
+        </div>
+      )}
     </main>
   );
 }
